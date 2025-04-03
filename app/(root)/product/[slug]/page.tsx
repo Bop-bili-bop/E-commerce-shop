@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import ProductPrice from "@/components/shared/product/product-price";
+import ProductImages from "@/components/shared/product/product-images";
 
 const ProductDetailPage = async (props: {
   params: Promise<{ slug: string }>;
@@ -19,7 +20,11 @@ const ProductDetailPage = async (props: {
     <>
       <section>
         <div className="grid grid-cols-1 md:grid-cols-4">
-          <div className="col-span-2">{/* IMG COMPONENT */}</div>
+          <div className="col-span-2">
+            <ProductImages 
+            images={product.images}
+            />
+          </div>
           <div className="col-span-2 p-5">
             <Card>
               <CardContent className="p-4">
@@ -35,13 +40,18 @@ const ProductDetailPage = async (props: {
                     <div className="mb-2 flex space-x-4">
                       <div>Price</div>
                       <div>
-                        <ProductPrice value={Number(product.price)} className="font-semibold" />
+                        <ProductPrice
+                          value={Number(product.price)}
+                          className="font-semibold"
+                        />
                       </div>
                     </div>
                     <div className="mb-2 flex space-x-4">
                       <div>Status</div>
                       {product.stock > 0 ? (
-                        <Badge variant="outline" className="bg-green-400">In Stock</Badge>
+                        <Badge variant="outline" className="bg-green-400">
+                          In Stock
+                        </Badge>
                       ) : (
                         <Badge variant="destructive">Out Of Stock</Badge>
                       )}
