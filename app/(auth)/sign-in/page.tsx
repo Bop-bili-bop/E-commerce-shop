@@ -1,3 +1,4 @@
+
 import {
   Card,
   CardContent,
@@ -9,11 +10,21 @@ import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { APP_NAME } from "@/lib/constants";
+import CredentialsSignInForm from "./credentials-signin-form";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
+
 export const metadata: Metadata = {
   title: "Sign In",
 };
 
-const signInPage = () => {
+const signInPage = async  () => {
+  const session = await auth();
+
+  if (session) {
+    return redirect("/");
+  }
+
   return (
     <div className="w-full max-w-md mx-auto">
       <Card>
@@ -32,7 +43,9 @@ const signInPage = () => {
             Sign in to your account
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">{/* FORM */}</CardContent>
+        <CardContent className="space-y-4">
+          <CredentialsSignInForm></CredentialsSignInForm>
+        </CardContent>
       </Card>
     </div>
   );
